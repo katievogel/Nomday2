@@ -21,14 +21,12 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           len: {
-            min: {
-              args: [8],
+              args: [8,100],
               message: "Password must be more than 7 characters."
             }
           }
         }
-      }
-    },
+      },
     {
       timestamps: false
     }

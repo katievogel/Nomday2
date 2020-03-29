@@ -19,9 +19,7 @@ app.get('/', (req, res) => {
 app.post('/adduser', (req, res) => {
     console.log('adduser received post');
     console.log(`adduser request.body: ${JSON.stringify(req.body)}`);
-    // Add record to database
-    // username, email address, password
-    // unique user-id
+    db.Users.findOrCreate({ where: {username: req.body.username }, defaults: {user_email: req.body.email, pass_word: req.body.pass_word}});
     res.send('adduser');
 });
 
