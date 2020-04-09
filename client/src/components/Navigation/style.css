@@ -1,0 +1,18 @@
+.nav-link-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    order: 3;
+}
+
+.nav-link {
+    color:rgb(0, 45, 193);
+    font-weight: 530;
+    display: flex;
+    flex: 0 1 auto;
+    align-content: flex-end;
+    justify-content: center;
+    flex-flow: column wrap;
+    padding: 1rem;
+    font-weight: 100;
+}
