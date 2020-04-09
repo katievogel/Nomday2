@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "./style.css";
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Axios from "axios";
 
 
 class LogIn extends Component {
     state = {
         username: "",
-        password: ""
+        password: "",
+        redirectTo: null
     }
     loginChange = (event) => {
         const { name, value } = event.target;
@@ -28,13 +29,19 @@ class LogIn extends Component {
         })
             .then(res => {
                 console.log(`User has logged in as ${(JSON.stringify(username))}`)
-                this.props.history.push("/login");
+                this.setState({
+                    redirectTo: '/mainplaces'
+                })
             }).catch(err => {
                 console.log("User does not exist")
             })
     }
 
     render(props) {
+        if (this.state.redirectTo) {
+            return <Redirect to={
+                { pathname: this.state.redirectTo }} />
+        }
         return (
             <div className="loginPage">
                 <section className="containerLogin">
