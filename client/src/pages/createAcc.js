@@ -27,19 +27,19 @@ class CreateAccount extends Component {
             alert(
                 `Password must be more than 7 characters, ${this.state.userName}`
             );
-        } else {
-            alert(`Hello ${this.state.userName}`);
-        }
+        } 
         axios.post('//localhost:3000/adduser', {
             username: this.state.userName,
             pass_word: this.state.passWord,
             email: this.state.email
         }).then(response => {
+            alert(`Hello ${this.state.userName}`);
             this.setState({
                 redirectTo: '/mainplaces'
             })
         }).catch(err => {
             console.log(err)
+            alert(`${this.state.userName} is taken. Please choose something else.`)
         })
     }
     render() {
