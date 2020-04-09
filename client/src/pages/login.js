@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import Axios from "axios";
 
 
@@ -10,29 +9,29 @@ class LogIn extends Component {
         username: "",
         password: ""
     }
-
-    loginSubmission = (event) => {
-        event.preventDeafult();
-        Axios.get("/api/users/", {
-            params: {
-                username: this.state.username,
-                password: this.state.password
-            }
-        })
-            .then(res => {
-                console.log(`User has logged in a ${(JSON.stringify(res.username))}`)
-                this.props.history.push("/login");
-            }).catch(err => {
-                console.log(err)
-            })
-    }
-
     loginChange = (event) => {
         const { name, value } = event.target;
 
         this.setState({
             [name]: value
         });
+    }
+
+    loginSubmission = (event) => {
+        event.preventDefault();
+        var username = this.state.username;
+        Axios.get("//localhost:3000/userlogin", {
+            params: {
+                username: this.state.username,
+                password: this.state.password
+            }
+        })
+            .then(res => {
+                console.log(`User has logged in as ${(JSON.stringify(username))}`)
+                this.props.history.push("/login");
+            }).catch(err => {
+                console.log("User does not exist")
+            })
     }
 
     render(props) {
@@ -66,7 +65,7 @@ class LogIn extends Component {
                             </div>
                             <div className="buttonContainer">
                                 <button
-                                    onClick={this.handleLogInSubmit}>
+                                    onClick={this.loginSubmission}>
                                     Sign In
                                 </button>
                                 <Link to="/createaccount/">
@@ -81,5 +80,4 @@ class LogIn extends Component {
     }
 }
 
-LogIn = withRouter(LogIn);
 export default LogIn;

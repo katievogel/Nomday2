@@ -22,7 +22,16 @@ app.post('/adduser', async (req, res) => {
     console.log(`adduser request.body: ${JSON.stringify(req.body)}`);
     try {
         let result = await db.Users.findOrCreate({ where: {username: req.body.username }, defaults: {user_email: req.body.email, pass_word: req.body.pass_word}});
-        res.send(JSON.stringify(result));
+        let [userRecord, wasCreated] = result;
+        console.log(userRecord);
+        console.log(wasCreated);
+        if (wasCreated === true){
+            res.send(JSON.stringify(result));
+            console.log("User successfully created")
+        } else if (wasCreated === false) {
+            res.status(500)
+            res.send("Username is already in use.")
+        }
     }
     catch (err) {
         res.send('adduser error');

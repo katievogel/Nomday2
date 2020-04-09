@@ -30,7 +30,7 @@ class CreateAccount extends Component {
         } else {
             alert(`Hello ${this.state.userName}`);
         }
-        axios.post('/adduser', {
+        axios.post('//localhost:3000/adduser', {
             username: this.state.userName,
             pass_word: this.state.passWord,
             email: this.state.email
