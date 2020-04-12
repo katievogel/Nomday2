@@ -21,9 +21,50 @@ class MyPlaces extends Component {
     render() {
         return (
             <div className="myPlacesPage">
-               <NavHeader />
+                <NavHeader />
                 <div className="myPlacesContainer">
-                    <div>Placeholder for 'My Places' Page</div>
+                    <div className="entriesContainer">
+                        <form className="form-group" action="/visitentry" method="POST">
+                            <input
+                                className="form-control"
+                                type="date"
+                                placeholder="Visit Date"
+                                name="visit_date"
+                            //value={this.state.visit_date}
+                            //onChange={this.ratingsInput}
+                            />
+                            <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Restaurant Name"
+                                name="place_name"
+                            //value={this.state.place_name}
+                            //onChange={this.ratingsInput}
+                            />
+                            <input
+                                className="form-control"
+                                type="text"
+                                placeholder="What did you eat?"
+                                name="fave_item"
+                            //value={this.state.fave_item}
+                            //onChange={this.ratingsInput}
+                            />
+                            <input
+                                className="form-control"
+                                type="text"
+                                placeholder="How would rank this place?"
+                                name="place_rank"
+                            //value={this.state.place_rank}
+                            //onChange={this.ratingsInput}
+                            />
+                            <textarea //value={this.state.value} onChange={this.handleChange}//
+                                className="form-control"
+                                type="text"
+                                placeholder="Additional Comments"
+                                name="comments"
+                            />
+                        </form>
+                    </div>
                 </div>
             </div>
         );
