@@ -33,6 +33,7 @@ class LogIn extends Component {
                     redirectTo: '/mainplaces'
                 })
             }).catch(err => {
+                alert("The username you have entered does not exist. Please login with your username or create an account.")
                 console.log("User does not exist")
             })
     }
