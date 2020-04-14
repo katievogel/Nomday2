@@ -15,6 +15,7 @@ class Search extends Component {
         return (
             <div className="searchPage">
                <NavHeader />
+               <h3>Search</h3>
                 <div className="searchContainer">
                     <div>Placeholder for 'Search' Page</div>
                 </div>

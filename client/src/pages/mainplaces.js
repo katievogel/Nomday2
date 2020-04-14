@@ -23,6 +23,7 @@ class MainPlaces extends Component {
         return (
             <div className="mainPlacesPage">
             <NavHeader />
+            <h3>Main Page</h3>
                 <div className="mainPlacesContainer">
                     <div>Placeholder for 'Main Places' Page</div>
                 </div>
