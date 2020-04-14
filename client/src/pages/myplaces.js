@@ -17,52 +17,113 @@ import { NavHeader } from "../components/Navigation";
 //Enter a new place, Save
 
 class MyPlaces extends Component {
+    state = {
+        visit_date: "",
+        place_name: "",
+        place_website: "",
+        fave_item: "",
+        place_rank: "",
+        comments: "",
+    }
+
+    infoInput = (event) => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        })
+    }
+
+    infoSubmit = (event) => {
+        event.preventDefault();
+        axios.post("//localhost:3000/addlunchvisit", {
+            visit_date: this.state.visit_date,
+            place_name: this.state.place_name,
+            place_website: this.state.place_website,
+            fave_item: this.state.fave_item,
+            place_rank: this.state.place_rank,
+            comments: this.state.comments
+        }).then(response =>{
+            res.json(response)
+            console.log("success on state change")
+        }).catch(err =>{
+            console.log(err)
+        })
+
+    }
 
     render() {
         return (
             <div className="myPlacesPage">
                 <NavHeader />
+                <h3>My Places</h3>
                 <div className="myPlacesContainer">
                     <div className="entriesContainer">
-                        <form className="form-group" action="/visitentry" method="POST">
+                        <form action="/visitentry" method="POST">
+                        <h6>When did you go?</h6>
                             <input
                                 className="form-control"
                                 type="date"
                                 placeholder="Visit Date"
                                 name="visit_date"
-                            //value={this.state.visit_date}
-                            //onChange={this.ratingsInput}
+                                value={this.state.visit_date}
+                                onChange={this.infoInput}
                             />
+                            <h6>Name of the restaurant</h6>
                             <input
                                 className="form-control"
                                 type="text"
                                 placeholder="Restaurant Name"
                                 name="place_name"
-                            //value={this.state.place_name}
-                            //onChange={this.ratingsInput}
+                                value={this.state.place_name}
+                                onChange={this.infoInput}
                             />
+                            <h6>Website</h6>
+                            <input
+                                className="form-control"
+                                type="url"
+                                placeholder="Enter restaurant Website, if available"
+                                name="place_website"
+                                value={this.state.place_website}
+                                onChange={this.infoInput}
+                            />
+                            <h6>What did you eat?</h6>
                             <input
                                 className="form-control"
                                 type="text"
                                 placeholder="What did you eat?"
                                 name="fave_item"
-                            //value={this.state.fave_item}
-                            //onChange={this.ratingsInput}
+                                value={this.state.fave_item}
+                                onChange={this.infoInput}
                             />
-                            <input
+                            <h6>How would you rate this place?</h6>
+                            <select
                                 className="form-control"
                                 type="text"
-                                placeholder="How would rank this place?"
+                                placeholder="Rating"
                                 name="place_rank"
-                            //value={this.state.place_rank}
-                            //onChange={this.ratingsInput}
-                            />
-                            <textarea //value={this.state.value} onChange={this.handleChange}//
+                                value={this.state.place_rank}
+                                onChange={this.infoInput}
+                                >
+                                <option value="1">1 - Very Low</option>
+                                <option value="2">2 - Low</option>
+                                <option value="3">3 - Ok</option>
+                                <option value="4">4 - Good</option>
+                                <option value="5">5 - Very Good</option>
+                            </select>
+                            <h6>Add any additional comments</h6>
+                            <textarea 
                                 className="form-control"
                                 type="text"
                                 placeholder="Additional Comments"
                                 name="comments"
+                                value={this.state.comments} 
+                                onChange={this.infoInput}
                             />
+                            <div className="buttonContainer">
+                                <button onClick={this.infoSubmit}>
+                                Submit
+                                </button>
+                                </div>
                         </form>
                     </div>
                 </div>
