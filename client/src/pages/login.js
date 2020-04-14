@@ -46,7 +46,7 @@ class LogIn extends Component {
         return (
             <div className="loginPage">
                 <section className="containerLogin">
-                    <div className="formHeader">Login</div>
+                    <div className="formHeader"><h3>Login</h3></div>
                     <div className="loginForm">
                         <form action="/login" method="GET">
                             <div className="containerField">

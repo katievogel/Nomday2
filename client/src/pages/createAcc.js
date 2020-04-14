@@ -50,7 +50,7 @@ class CreateAccount extends Component {
         return (
             <div className="loginPage">
                 <section className="containerLogin">
-                    <div className="accountHeader">Create Your Account</div>
+                    <div className="accountHeader"><h3>Create Your Account</h3></div>
                     <div className="loginForm">
                         <form action="/adduser" method="POST">
                             <div className="containerField">
