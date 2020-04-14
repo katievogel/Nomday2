@@ -38,6 +38,34 @@ app.post('/adduser', async (req, res) => {
     }
 });
 
+app.post('/addlunchvisit', async (req, res) => {
+    console.log('add lunch visit received a post');
+    try {
+        let result = await db.Ratings.create({
+            place_rank: req.body.place_rank,
+            visit_date: req.body.visit_date,
+            fave_item: req.body.fave_item,
+            comments: req.body.comments
+        });
+        let result2 = await db.Restaurants.findOrCreate({ 
+            where: { place_name: req.body.place_name}, 
+            defaults: {
+                place_website: req.body.place_website, 
+                place_last_visit_date: req.body.visit_date, 
+                place_rank: req.body.place_rank
+            }
+        })
+        console.log("result: " + JSON.stringify(result))
+        console.log("result: " + JSON.stringify(result2))
+        res.send()
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500);
+        res.send('add entry error')
+    }
+})
+
 app.get('/userlogin', async (req, res) => {
     console.log('userlogin');
     console.log(`request.body: ${JSON.stringify(req.query)}`);
