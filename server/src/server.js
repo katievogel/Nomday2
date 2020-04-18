@@ -40,14 +40,9 @@ app.post('/adduser', async (req, res) => {
 
 app.post('/addlunchvisit', async (req, res) => {
     console.log('add lunch visit received a post');
+    console.log("place rank: " + JSON.stringify(req.body.place_rank))
     try {
-        let result = await db.Ratings.create({
-            place_rank: req.body.place_rank,
-            visit_date: req.body.visit_date,
-            fave_item: req.body.fave_item,
-            comments: req.body.comments
-        });
-        let result2 = await db.Restaurants.findOrCreate({ 
+        let [restaurant_result, is_created] = await db.Restaurants.findOrCreate({ 
             where: { place_name: req.body.place_name}, 
             defaults: {
                 place_website: req.body.place_website, 
@@ -55,14 +50,23 @@ app.post('/addlunchvisit', async (req, res) => {
                 place_rank: req.body.place_rank
             }
         })
-        console.log("result: " + JSON.stringify(result))
-        console.log("result: " + JSON.stringify(result2))
+        let rating_result = await db.Ratings.create({
+            restID: restaurant_result.restID,
+            place_rank: req.body.place_rank,
+            visit_date: req.body.visit_date,
+            fave_item: req.body.fave_item,
+            comments: req.body.comments
+        });
+
+        console.log("result: " + JSON.stringify(rating_result))
+        console.log("result2: " + JSON.stringify(restaurant_result))
         res.send()
     }
     catch(err) {
         console.log(err)
         res.status(500);
         res.send('add entry error')
+        
     }
 })
 
