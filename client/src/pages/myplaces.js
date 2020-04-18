@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
 import { NavHeader } from "../components/Navigation";
+import moment from 'moment';
 
 //header
 //links- Main/Home, My Places, Search, Sign Out
@@ -16,6 +17,7 @@ import { NavHeader } from "../components/Navigation";
 //
 //Enter a new place, Save
 
+
 class MyPlaces extends Component {
     state = {
         visit_date: "",
@@ -26,8 +28,12 @@ class MyPlaces extends Component {
         comments: "",
     }
 
+    isValid = () => {
+        return (this.state.place_rank !== "" && this.state.visit_date !== "" && this.state.place_name !== "");
+    }
+
     infoInput = (event) => {
-        const { name, value } = event.target;
+        var { name, value } = event.target;
         this.setState({
             [name]: value
         })
@@ -43,9 +49,8 @@ class MyPlaces extends Component {
             place_rank: this.state.place_rank,
             comments: this.state.comments
         }).then(response =>{
-            res.json(response)
-            console.log("success on state change")
-        }).catch(err =>{
+            console.log("success on state change: " + JSON.stringify(response))
+        }).catch(err =>{ 
             console.log(err)
         })
 
@@ -67,6 +72,7 @@ class MyPlaces extends Component {
                                 name="visit_date"
                                 value={this.state.visit_date}
                                 onChange={this.infoInput}
+                                max={moment().format("YYYY-MM-DD")}
                             />
                             <h6>Name of the restaurant</h6>
                             <input
@@ -104,6 +110,7 @@ class MyPlaces extends Component {
                                 value={this.state.place_rank}
                                 onChange={this.infoInput}
                                 >
+                                <option value=""></option>
                                 <option value="1">1 - Very Low</option>
                                 <option value="2">2 - Low</option>
                                 <option value="3">3 - Ok</option>
@@ -120,10 +127,12 @@ class MyPlaces extends Component {
                                 onChange={this.infoInput}
                             />
                             <div className="buttonContainer">
-                                <button onClick={this.infoSubmit}>
+                                <button onClick={this.infoSubmit}
+                                disabled={!this.isValid()}>
                                 Submit
                                 </button>
                                 </div>
+                                <pre>{JSON.stringify(this.state, null, 2)}</pre>
                         </form>
                     </div>
                 </div>
