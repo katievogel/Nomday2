@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { NavHeader } from "../components/Navigation";
 import moment from 'moment';
 

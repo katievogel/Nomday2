@@ -1,8 +1,10 @@
 //Simplest express 
 var express = require('express');
+var path = require('path');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var db = require("./models");
+var cookieParser = require("cookie-parser");
 
 var PORT = 3000;
 
@@ -13,9 +15,12 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '50mb', parameterLimit: 100000 }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb', parameterLimit: 100000 }));
 
-app.get('/', (req, res) => {
-    res.send('hello world');
-});
+app.use(cookieParser());
+app.use('/', express.static(path.join(__dirname, '../client/dist')));
+
+// app.get('/', (req, res) => {
+    
+// });
 
 app.post('/adduser', async (req, res) => {
     console.log('adduser received post');
@@ -76,6 +81,7 @@ app.get('/userlogin', async (req, res) => {
     try {
         let result = await db.Users.findOne({where: {username: req.query.username, pass_word: req.query.password}});
         if (result !== null) {
+            res.cookie("user", result.username);
             res.send(JSON.stringify(result));
         } else {
             res.status(401);
@@ -95,6 +101,5 @@ let init = async () => {
         console.log(`server started on ${PORT}`);
     });
 }
-//end simplest express
 
 init();
