@@ -9,14 +9,14 @@ var cookieParser = require("cookie-parser");
 var PORT = 3000;
 
 var app = express();
-//CORS is a security feature
+//CORS is a security feature. Cross Origin Resource Sharing.
 app.use(cors());
 //bodyParser captures the body of the request that was entered. JSON.stringify makes it JSON, otherwise you get Object Object
 app.use(bodyParser.json({ limit: '50mb', parameterLimit: 100000 }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb', parameterLimit: 100000 }));
 
 app.use(cookieParser());
-app.use('/', express.static(path.join(__dirname, '../client/dist')));
+app.use('/', express.static(path.join(__dirname, '../../client/dist')));
 
 // app.get('/', (req, res) => {
     
@@ -55,7 +55,12 @@ app.post('/addlunchvisit', async (req, res) => {
                 place_rank: req.body.place_rank
             }
         })
+        //USERID-COOKIE FUNCTIONALITY TO BE UPDATED LATER FOR SECURITY
+        console.log("cookie username, ",  req.cookies);
+        var userDbID = await db.Users.findOne(
+            { where: {username: req.cookies.username }});
         let rating_result = await db.Ratings.create({
+            userID: userDbID.userID,
             restID: restaurant_result.restID,
             place_rank: req.body.place_rank,
             visit_date: req.body.visit_date,
@@ -81,7 +86,7 @@ app.get('/userlogin', async (req, res) => {
     try {
         let result = await db.Users.findOne({where: {username: req.query.username, pass_word: req.query.password}});
         if (result !== null) {
-            res.cookie("user", result.username);
+            res.cookie("username", result.username).send('cookie set');
             res.send(JSON.stringify(result));
         } else {
             res.status(401);

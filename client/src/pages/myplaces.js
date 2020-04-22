@@ -42,7 +42,7 @@ class MyPlaces extends Component {
 
     infoSubmit = (event) => {
         event.preventDefault();
-        axios.post("//localhost:3000/addlunchvisit", {
+        axios.post("/addlunchvisit", {
             visit_date: this.state.visit_date,
             place_name: this.state.place_name,
             place_website: this.state.place_website,
